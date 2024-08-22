@@ -47,6 +47,7 @@ export default function Verses({
       </article>
       <BottomVerseNavigation
         book={book}
+        verses={verses}
         chapter={chapter}
         nextBookExists={nextBookExists}
         previousBookExists={previousBookExists}
