@@ -1,14 +1,16 @@
 "use client";
 
+import clsx from "clsx";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Menu, Search } from "lucide-react";
-import { useNavigationContext } from "@/contexts/NavigationContext";
-import ThemeToggle from "@/components/ThemeToggle";
-import Link from "next/link";
+import { useCookies } from "next-client-cookies";
 import Sidebar from "@/components/Header/Sidebar";
-import { motion } from "framer-motion";
-import clsx from "clsx";
+import ThemeToggle from "@/components/ThemeToggle";
+import AnimatePing from "@/components/animate-ping";
 import SearchPalette from "@/components/SearchPalette";
+import { useNavigationContext } from "@/contexts/NavigationContext";
 
 export default function Header() {
   const [searchPaletteOpen, setSearchPaletteOpen] = useState(false);
@@ -16,10 +18,16 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   const { navigation } = useNavigationContext();
+  const cookies = useCookies();
 
   const openSidebar = () => setSidebarOpen(true);
   const closeSidebar = () => setSidebarOpen(false);
   const openSearchPalette = () => setSearchPaletteOpen(true);
+
+  const showPingInAboutPage = (title: string) =>
+    title === "Contribuir" && cookies.get("visited_contribute_page") !== "true";
+  const showPingInContributePage = (title: string) =>
+    title === "Sobre" && cookies.get("visited_about_page") !== "true";
 
   useEffect(() => {
     window.onscroll = function () {
@@ -94,6 +102,8 @@ export default function Header() {
             >
               <item.icon className="h-5 w-5" />
               <span className="relative font-medium">{item.title}</span>
+              {showPingInAboutPage(item.title) && <AnimatePing />}
+              {showPingInContributePage(item.title) && <AnimatePing />}
               {item.current && (
                 <motion.div
                   layoutId="pill"

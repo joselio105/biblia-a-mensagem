@@ -1,9 +1,10 @@
-import { Metadata } from "next";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
 import { clsx } from "clsx";
+import Link from "next/link";
+import { Metadata } from "next";
+import SetCookie from "@/components/set-cookie";
+import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Sobre",
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default async function Sobre() {
   return (
     <Card className="mx-auto w-full max-w-4xl">
+      <SetCookie name="visited_about_page" value="true" />
       <CardHeader>
         <h1 className="text-center text-2xl font-bold leading-none tracking-tight sm:text-2xl">
           Sobre o Projeto

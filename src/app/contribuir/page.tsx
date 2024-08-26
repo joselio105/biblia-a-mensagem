@@ -15,6 +15,7 @@ import {
   CarouselItem,
   CarouselNavigation,
 } from "@/components/core/carousel";
+import SetCookie from "@/components/set-cookie";
 
 export const metadata: Metadata = {
   title: "Contribuir",
@@ -59,6 +60,7 @@ const affiliateProducts = [
 export default function Contribuir() {
   return (
     <Card className="mx-auto w-full max-w-4xl">
+      <SetCookie name="visited_contribute_page" value="true" />
       <CardHeader>
         <h1 className="text-center text-2xl font-bold leading-none tracking-tight sm:text-2xl">
           Participe e Contribua
@@ -105,7 +107,7 @@ export default function Contribuir() {
               </p>
 
               {/* desktop grid */}
-              <div className="xsm:grid-cols-2 xsm:grid hidden grid-cols-1 gap-4 sm:grid-cols-3">
+              <div className="hidden grid-cols-1 gap-4 xsm:grid xsm:grid-cols-2 sm:grid-cols-3">
                 {affiliateProducts.map((product) => (
                   <Card id={product.title}>
                     <CardContent className="flex h-full flex-col justify-between p-2">
@@ -133,7 +135,7 @@ export default function Contribuir() {
               </div>
 
               {/* mobile carousel */}
-              <div className="xsm:hidden relative w-full">
+              <div className="relative w-full xsm:hidden">
                 <Carousel>
                   <CarouselContent>
                     {affiliateProducts.map((product) => (

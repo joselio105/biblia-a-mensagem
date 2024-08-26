@@ -1,10 +1,12 @@
-import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import clsx from "clsx";
 import Link from "next/link";
+import { Fragment } from "react";
 import { X } from "lucide-react";
 import ThemeToggle from "../ThemeToggle";
+import AnimatePing from "@/components/animate-ping";
+import { Dialog, Transition } from "@headlessui/react";
 import { useNavigationContext } from "@/contexts/NavigationContext";
-import clsx from "clsx";
+import { useCookies } from "next-client-cookies";
 
 export default function Sidebar({
   sidebarOpen,
@@ -14,6 +16,14 @@ export default function Sidebar({
   closeSidebar: () => void;
 }) {
   const { navigation } = useNavigationContext();
+
+  const cookies = useCookies();
+
+  const showPingInAboutPage = (title: string) =>
+    title === "Contribuir" && cookies.get("visited_contribute_page") !== "true";
+  const showPingInContributePage = (title: string) =>
+    title === "Sobre" && cookies.get("visited_about_page") !== "true";
+
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -84,6 +94,10 @@ export default function Sidebar({
                           >
                             <item.icon className="h-5 w-5" />
                             {item.title}
+                            {showPingInAboutPage(item.title) && <AnimatePing />}
+                            {showPingInContributePage(item.title) && (
+                              <AnimatePing />
+                            )}
                           </Link>
                         ))}
                       </div>
