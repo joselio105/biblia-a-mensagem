@@ -7,16 +7,30 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useState } from "react";
 import { TriangleAlert } from "lucide-react";
+import { BibleBook, Verse } from "@/lib/types";
+import { ReportForm } from "@/components/ReportDialog/report-form";
 
-export function ReportDialog({ children }: { children: React.ReactNode }) {
+export function ReportDialog({
+  book,
+  chapter,
+  verses,
+}: {
+  book: BibleBook;
+  chapter: number;
+  verses: Verse[];
+}) {
+  const [open, setOpen] = useState(false);
+
+  function closeDialog() {
+    setOpen(false);
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="w-full text-red-500 hover:text-red-500 sm:w-fit"
-        >
+        <Button variant="outline" className="w-full sm:w-fit">
           <TriangleAlert className="mr-2 h-5 w-5" />
           Informar Problema
         </Button>
@@ -25,12 +39,16 @@ export function ReportDialog({ children }: { children: React.ReactNode }) {
         <DialogHeader>
           <DialogTitle>Informar Problema</DialogTitle>
           <DialogDescription>
-            Sua contribuição é essencial para que possamos oferecer uma
-            experiência de leitura mais precisa e agradável. Utilize o
-            formulário abaixo para reportar erros ou sugerir melhorias.
+            Sua contribuição é essencial para melhorar a experiência de leitura.
+            Use o formulário abaixo para reportar erros ou sugerir melhorias.
           </DialogDescription>
         </DialogHeader>
-        {children}
+        <ReportForm
+          book={book}
+          chapter={chapter}
+          verses={verses}
+          closeDialog={closeDialog}
+        />
       </DialogContent>
     </Dialog>
   );
