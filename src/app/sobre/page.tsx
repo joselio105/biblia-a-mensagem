@@ -2,8 +2,8 @@ import { clsx } from "clsx";
 import Link from "next/link";
 import { Metadata } from "next";
 import SetCookie from "@/components/set-cookie";
-import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 "use client";
 
-import { useCookies } from "next-client-cookies";
 import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 export default function SetCookie({
   name,
@@ -10,10 +10,10 @@ export default function SetCookie({
   name: string;
   value: string;
 }) {
-  const cookies = useCookies();
+  const [cookies, setCookie] = useCookies([name]);
 
   useEffect(() => {
-    cookies.set(name, value);
+    setCookie(name, value);
   }, []);
 
   return null;

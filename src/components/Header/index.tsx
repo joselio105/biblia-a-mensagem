@@ -3,9 +3,9 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import { Menu, Search } from "lucide-react";
-import { useCookies } from "next-client-cookies";
 import Sidebar from "@/components/Header/Sidebar";
 import ThemeToggle from "@/components/ThemeToggle";
 import AnimatePing from "@/components/animate-ping";
@@ -18,16 +18,19 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   const { navigation } = useNavigationContext();
-  const cookies = useCookies();
+  const [cookies, setCookie] = useCookies([
+    "visited_about_page",
+    "visited_contribute_page",
+  ]);
 
   const openSidebar = () => setSidebarOpen(true);
   const closeSidebar = () => setSidebarOpen(false);
   const openSearchPalette = () => setSearchPaletteOpen(true);
 
   const showPingInAboutPage = (title: string) =>
-    title === "Contribuir" && cookies.get("visited_contribute_page") !== "true";
+    title === "Contribuir" && !cookies.visited_contribute_page;
   const showPingInContributePage = (title: string) =>
-    title === "Sobre" && cookies.get("visited_about_page") !== "true";
+    title === "Sobre" && !cookies.visited_about_page;
 
   useEffect(() => {
     window.onscroll = function () {

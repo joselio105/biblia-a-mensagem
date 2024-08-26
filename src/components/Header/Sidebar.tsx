@@ -6,7 +6,7 @@ import ThemeToggle from "../ThemeToggle";
 import AnimatePing from "@/components/animate-ping";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigationContext } from "@/contexts/NavigationContext";
-import { useCookies } from "next-client-cookies";
+import { useCookies } from "react-cookie";
 
 export default function Sidebar({
   sidebarOpen,
@@ -17,12 +17,15 @@ export default function Sidebar({
 }) {
   const { navigation } = useNavigationContext();
 
-  const cookies = useCookies();
+  const [cookies, setCookie] = useCookies([
+    "visited_about_page",
+    "visited_contribute_page",
+  ]);
 
   const showPingInAboutPage = (title: string) =>
-    title === "Contribuir" && cookies.get("visited_contribute_page") !== "true";
+    title === "Contribuir" && !cookies.visited_contribute_page;
   const showPingInContributePage = (title: string) =>
-    title === "Sobre" && cookies.get("visited_about_page") !== "true";
+    title === "Sobre" && !cookies.visited_about_page;
 
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>

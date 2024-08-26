@@ -4,10 +4,6 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
-import { Metadata } from "next";
-import { Button } from "@/components/ui/button";
-import { CreditCard, ShoppingCart } from "lucide-react";
-import Link from "next/link";
 import {
   Carousel,
   CarouselContent,
@@ -15,7 +11,11 @@ import {
   CarouselItem,
   CarouselNavigation,
 } from "@/components/core/carousel";
+import Link from "next/link";
+import { Metadata } from "next";
 import SetCookie from "@/components/set-cookie";
+import { Button } from "@/components/ui/button";
+import { CreditCard, ShoppingCart } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contribuir",
