@@ -18,7 +18,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   const { navigation } = useNavigationContext();
-  const [cookies, setCookie] = useCookies([
+  const [cookies, _setCookie] = useCookies([
     "visited_about_page",
     "visited_contribute_page",
   ]);
@@ -31,6 +31,8 @@ export default function Header() {
     title === "Contribuir" && !cookies.visited_contribute_page;
   const showPingInContributePage = (title: string) =>
     title === "Sobre" && !cookies.visited_about_page;
+  const showPingInHambugerMenu =
+    !cookies.visited_contribute_page || !cookies.visited_about_page;
 
   useEffect(() => {
     window.onscroll = function () {
@@ -88,6 +90,7 @@ export default function Header() {
               className="h-6 w-6 text-gray-500 group-hover/menu:text-gray-900 dark:group-hover/menu:text-gray-300"
               aria-hidden="true"
             />
+            {showPingInHambugerMenu && <AnimatePing />}
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-10">

@@ -10,7 +10,7 @@ export default function SetCookie({
   name: string;
   value: string;
 }) {
-  const [cookies, setCookie] = useCookies([name]);
+  const [_cookies, setCookie] = useCookies([name]);
 
   useEffect(() => {
     setCookie(name, value);
