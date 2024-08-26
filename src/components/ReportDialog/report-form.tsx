@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Form,
   FormControl,
@@ -34,15 +32,20 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { BibleBook, ReportFormSchema, Verse } from "@/lib/types";
 import { submitReportDialogData } from "@/actions/report-dialog.action";
 
+const MAX_CHARACTERS = 300;
+
 export function ReportForm({
   book,
   chapter,
   verses,
+  closeDialog,
 }: {
   book: BibleBook;
   chapter: number;
   verses: Verse[];
+  closeDialog: () => void;
 }) {
+  const [charCount, setCharCount] = useState(0);
   const [fileHover, setFileHover] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
@@ -70,15 +73,19 @@ export function ReportForm({
       await submitReportDialogData(formData);
 
       toast({
-        title: "Sucesso",
+        title: "Enviado com Sucesso",
+        variant: "success",
         description:
-          "Seu relatório foi enviado com sucesso. Obrigado por ajudar a melhorar o aplicativo!",
+          "Agradecemos sua contribuição para aprimorar nossa plataforma!",
       });
+
+      closeDialog();
     } catch (error) {
       toast({
-        title: "Erro",
+        title: "Falha no Envio",
+        variant: "destructive",
         description:
-          "Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.",
+          "Não conseguimos processar sua solicitação agora. Por favor, tente enviar novamente em alguns instantes.",
       });
     } finally {
       setIsUploading(false);
@@ -239,10 +246,18 @@ export function ReportForm({
               <FormControl>
                 <Textarea
                   placeholder="Descreva o erro encontrado"
-                  className="resize-none"
+                  className="min-h-40 resize-none"
+                  maxLength={MAX_CHARACTERS}
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    setCharCount(e.target.value.length);
+                  }}
                 />
               </FormControl>
+              <div className="text-right text-sm text-muted-foreground">
+                {charCount}/{MAX_CHARACTERS}
+              </div>
               <FormDescription>
                 Descreva o erro encontrado com o máximo de detalhes possível.
               </FormDescription>

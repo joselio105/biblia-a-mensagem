@@ -3,7 +3,6 @@ import { ArrowUpToLine } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ReportDialog } from "@/components/ReportDialog";
-import { ReportForm } from "@/components/ReportDialog/report-form";
 
 export default function BottomVerseNavigation({
   book,
@@ -42,9 +41,7 @@ export default function BottomVerseNavigation({
       </div>
       <div className="flex w-full flex-1 flex-col justify-between gap-2 sm:flex-row sm:justify-end">
         <div className="flex w-full flex-1 sm:justify-end">
-          <ReportDialog>
-            <ReportForm book={book} chapter={chapter} verses={verses} />
-          </ReportDialog>
+          <ReportDialog book={book} chapter={chapter} verses={verses} />
         </div>
         <div className="flex justify-between gap-2">
           <div>
