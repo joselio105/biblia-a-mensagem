@@ -15,6 +15,7 @@ export async function initializeGoogleApis() {
 
   const sheets = google.sheets({ version: "v4", auth });
   const drive = google.drive({ version: "v3", auth });
+  const analytics = google.analytics({ version: "v3", auth });
 
-  return { sheets, drive };
+  return { sheets, drive, analytics };
 }

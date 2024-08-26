@@ -30,7 +30,7 @@ export default function BottomVerseNavigation({
 
   return (
     <nav
-      className="flex flex-col items-start justify-between gap-2 rounded-b-lg border-t border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-900 sm:flex-row sm:items-center sm:gap-0 sm:px-6"
+      className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center sm:gap-0"
       aria-label="Pagination"
     >
       <div className="sm:block">

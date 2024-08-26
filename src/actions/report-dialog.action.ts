@@ -17,8 +17,8 @@ function formDataToObject<T>(formData: FormData): T {
 
 export async function submitReportDialogData(formData: FormData) {
   try {
-    const data = formDataToObject<typeof ReportFormSchema._type>(formData);
     let screenshotUrl = "";
+    const data = formDataToObject<typeof ReportFormSchema._type>(formData);
     const validatedData = ReportFormSchema.parse(data);
 
     const { sheets, drive } = await initializeGoogleApis();
@@ -27,7 +27,7 @@ export async function submitReportDialogData(formData: FormData) {
       const driveResponse = await drive.files.create({
         requestBody: {
           name: `file.name-${Date.now()}`,
-          parents: ["1e4r-RLtk9Guc-wUsN5Jo8NO72gEnvnKa"],
+          parents: [`${process.env.GOOGLE_DRIVE_FOLDER_ID}`],
           mimeType: "image/jpeg",
         },
         media: {
@@ -43,7 +43,7 @@ export async function submitReportDialogData(formData: FormData) {
       screenshotUrl = `https://drive.google.com/file/d/${fileId}/view`;
     }
 
-    const sheetsResponse = await sheets.spreadsheets.values.append({
+    await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
       range: "A1:B8",
       valueInputOption: "USER_ENTERED",

@@ -30,7 +30,7 @@ export default function VerseContent({
         </h4>
       )}
       <p
-        className="justify-inter-word scroll-my-20 text-justify text-sm dark:text-gray-200 sm:text-base"
+        className="justify-inter-word scroll-my-20 text-justify text-sm text-primary dark:text-gray-200 sm:text-base"
         id={verse.number}
       >
         <sup className="mr-2 text-sm font-bold dark:text-gray-400">
