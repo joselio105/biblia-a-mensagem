@@ -1,12 +1,12 @@
 import "@/app/globals.css";
-import Footer from "@/components/footer";
-import Header from "@/components/Header";
+import Script from "next/script";
+import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 import Providers from "@/providers";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ReactNode } from "react";
-import clsx from "clsx";
-import Script from "next/script";
+import Header from "@/components/Header";
+import Footer from "@/components/footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s | Bíblia A Mensagem",
   },
   description:
-    "Explore a Bíblia A Mensagem online, uma tradução moderna e acessível da Bíblia. Mergulhe nos textos sagrados e deixe que a palavra de Deus inspire e guie seu caminho.",
+    "Explore a Bíblia The Passion online, uma tradução moderna e acessível da Bíblia. Mergulhe nos textos sagrados e deixe que a palavra de Deus inspire e guie seu caminho.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -39,9 +39,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       />
       <GoogleAnalytics gaId={`${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`} />
       <body
-        className={clsx(
+        className={cn(
           inter.className,
-          "flex min-h-screen w-full flex-col justify-start bg-gray-100 antialiased dark:bg-gray-800"
+          "flex h-full min-h-screen w-full flex-col justify-start bg-gray-100 antialiased dark:bg-gray-800"
         )}
       >
         <Providers>
