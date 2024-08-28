@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s | Bíblia A Mensagem",
   },
   description:
-    "Explore a Bíblia The Passion online, uma tradução moderna e acessível da Bíblia. Mergulhe nos textos sagrados e deixe que a palavra de Deus inspire e guie seu caminho.",
+    "Explore a Bíblia A Mensagem online, uma tradução moderna e acessível da Bíblia. Mergulhe nos textos sagrados e deixe que a palavra de Deus inspire e guie seu caminho.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
