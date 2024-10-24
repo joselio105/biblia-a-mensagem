@@ -14,7 +14,7 @@ import { Link } from "expo-router";
 export function Header() {
   const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View className="bg-black flex-row items-center gap-3 mt-8 p-3 relative">
+    <View className="bg-zinc-900 flex-row items-center gap-3 w-full p-3 pt-8">
       <View className="flex-1 flex-row items-center gap-3">
         <Image
           source={require("@/assets/bible-120px.png")}

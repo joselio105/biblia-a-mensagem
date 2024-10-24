@@ -8,6 +8,8 @@ import {
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
 import { Loading } from "@/components/loading";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -22,8 +24,10 @@ export default function Layout() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-900">
+    <SafeAreaView className="flex-1 items-center bg-slate-700">
+      <Header />
       <Slot />
+      <Footer />
     </SafeAreaView>
   );
 }
