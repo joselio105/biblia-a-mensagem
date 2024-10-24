@@ -24,7 +24,7 @@ export default function Layout() {
   }
 
   return (
-    <SafeAreaView className="flex-1 items-center bg-slate-700">
+    <SafeAreaView className="flex-1 items-center bg-slate-800">
       <Header />
       <Slot />
       <Footer />

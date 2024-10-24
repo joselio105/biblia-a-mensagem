@@ -6,11 +6,12 @@ import { BooksItem } from "./books-item";
 interface Props {
   books: IBibleBook[];
   title: string;
+  testament: "old" | "new";
 }
 
-export function Books({ title, books }: Props) {
+export function Books({ title, books, testament }: Props) {
   return (
-    <View className="flex-1">
+    <View className="flex-1 mx-3">
       <Text className="text-xl text-zinc-100 font-bold text-center my-3">
         {title}
       </Text>
@@ -20,7 +21,7 @@ export function Books({ title, books }: Props) {
             key={normalizedTitle}
             title={title}
             subtitle={`${chaptersCount} capítulos`}
-            route={`/book/${normalizedTitle}`}
+            route={`/book/${normalizedTitle}+${testament}`}
           />
         ))}
       </ScrollView>
