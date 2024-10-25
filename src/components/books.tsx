@@ -1,12 +1,11 @@
 import { IBibleBook } from "@/types/bible";
-import { Link } from "expo-router";
 import { View, Text, ScrollView } from "react-native";
 import { BooksItem } from "./books-item";
 
 interface Props {
   books: IBibleBook[];
   title: string;
-  testament: "old" | "new";
+  testament: "old-testament" | "new-testament";
 }
 
 export function Books({ title, books, testament }: Props) {
@@ -16,12 +15,11 @@ export function Books({ title, books, testament }: Props) {
         {title}
       </Text>
       <ScrollView className="bg-zinc-900 border border-zinc-400 rounded-md">
-        {books.map(({ title, normalizedTitle, chaptersCount }) => (
+        {books.map((book) => (
           <BooksItem
-            key={normalizedTitle}
-            title={title}
-            subtitle={`${chaptersCount} capítulos`}
-            route={`/book/${normalizedTitle}+${testament}`}
+            key={book.normalizedTitle}
+            book={book}
+            testament={testament}
           />
         ))}
       </ScrollView>

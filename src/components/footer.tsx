@@ -5,7 +5,7 @@ import colors from "tailwindcss/colors";
 
 export function Footer() {
   return (
-    <View className="bg-black">
+    <View className="bg-zinc-900 mt-3">
       <View className="flex-row justify-between px-8 py-4 w-full">
         <Link href="/">
           <Text className="font-body text-sm text-zinc-100">Início</Text>

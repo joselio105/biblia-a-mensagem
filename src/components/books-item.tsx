@@ -1,19 +1,22 @@
+import { IBibleBook } from "@/types/bible";
 import { Feather } from "@expo/vector-icons";
 import { Href, useNavigation, useRouter } from "expo-router";
 import { TouchableOpacity, View, Text } from "react-native";
 import colors from "tailwindcss/colors";
 
 interface Props {
-  title: string;
-  subtitle?: string;
-  route: Href;
+  book: IBibleBook;
+  testament: "old-testament" | "new-testament";
 }
 
-export function BooksItem({ title, subtitle, route }: Props) {
+export function BooksItem({
+  book: { title, normalizedTitle, chaptersCount },
+  testament,
+}: Props) {
   const router = useRouter();
 
   function handleClick() {
-    router.push(route);
+    router.push(`/${testament}/${normalizedTitle}`);
   }
 
   return (
@@ -25,9 +28,8 @@ export function BooksItem({ title, subtitle, route }: Props) {
         <Text className="text-zinc-100 text-lg font-subtitle">{title}</Text>
         <Feather name="arrow-up-right" color={colors.zinc[400]} size={28} />
       </View>
-      {subtitle && (
-        <Text className="text-zinc-400 text-base font-body">{subtitle}</Text>
-      )}
+
+      <Text className="text-zinc-400 text-base font-body">{`${chaptersCount} capítulos`}</Text>
     </TouchableOpacity>
   );
 }

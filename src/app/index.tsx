@@ -6,12 +6,12 @@ export default function Home() {
   return (
     <View className="flex-1 flex-row px-3">
       <Books
-        testament="old"
+        testament="old-testament"
         title="Antigo Testamento"
         books={BibleBooks.oldTestament}
       />
       <Books
-        testament="new"
+        testament="new-testament"
         title="Novo Testamento"
         books={BibleBooks.newTestament}
       />

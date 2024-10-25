@@ -5,14 +5,12 @@ import { Feather } from "@expo/vector-icons";
 import { AllBibleBooks } from "@/data/bible-books";
 
 export default function Book() {
-  const { book: bookTestament } = useLocalSearchParams();
-  const [bookName, testament] = String(bookTestament).split("+");
+  const { book: bookName, testament } = useLocalSearchParams();
   const router = useRouter();
 
   function handleClick(route: Href) {
     router.push(route);
   }
-  console.log(bookName, testament, bookTestament);
 
   const book = AllBibleBooks.find((book) => book.normalizedTitle === bookName);
   if (book) {
@@ -31,9 +29,7 @@ export default function Book() {
               className="w-20 h-12 flex-row justify-between p-2 bg-zinc-900 border border-zinc-400 rounded-md"
               onPress={() =>
                 handleClick(
-                  `/book/chapter/${book.normalizedTitle}+${
-                    index + 1
-                  }+${testament}`
+                  `/${testament}/${book.normalizedTitle}/${index + 1}`
                 )
               }
             >
