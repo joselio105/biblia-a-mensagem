@@ -1,7 +1,8 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import { Href, Link, useLocalSearchParams, useRouter } from "expo-router";
-import colors from "tailwindcss/colors";
+import { Href, useLocalSearchParams, useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
+import colors from "tailwindcss/colors";
+import { ButtonBack } from "@/components/button-back";
 import { AllBibleBooks } from "@/data/bible-books";
 
 export default function Book() {
@@ -44,12 +45,7 @@ export default function Book() {
             </TouchableOpacity>
           ))}
         </ScrollView>
-        <Link href="/" asChild>
-          <TouchableOpacity className="h-12 flex-row gap-3 justify-center items-center bg-zinc-900 border border-zinc-400 rounded-md mx-3 mt-5">
-            <Feather name="arrow-left" size={20} color={colors.zinc[400]} />
-            <Text className="text-zinc-400 text-base font-body">Voltar</Text>
-          </TouchableOpacity>
-        </Link>
+        <ButtonBack />
       </View>
     );
   }
