@@ -1,9 +1,10 @@
-import { Text, View } from "react-native";
+import { Heading } from "@/components/heading";
+import { ScrollView, Text, View } from "react-native";
 
 export default function Gift() {
   return (
-    <View>
-      <Text className="text-zinc-100 text-xl font-heading">Contribua</Text>
-    </View>
+    <ScrollView className="flex-1">
+      <Heading>Contribua</Heading>
+    </ScrollView>
   );
 }
