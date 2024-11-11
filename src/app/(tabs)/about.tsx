@@ -4,7 +4,7 @@ import { ScrollView, Text, View } from "react-native";
 
 export default function About() {
   return (
-    <ScrollView className="flex-1 px-5">
+    <ScrollView className="flex-1 bg-zinc-900">
       <Heading>Sobre o Projeto</Heading>
       <Paragraph>
         O projeto Bíblia A Mensagem Online nasceu durante a pandemia, com a

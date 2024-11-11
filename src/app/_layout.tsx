@@ -1,4 +1,4 @@
-import { Slot } from "expo-router";
+import { Slot, Stack } from "expo-router";
 import { SafeAreaView } from "react-native";
 import {
   useFonts,
@@ -24,10 +24,8 @@ export default function Layout() {
   }
 
   return (
-    <SafeAreaView className="flex-1 items-center bg-slate-800">
-      <Header />
-      <Slot />
-      <Footer />
-    </SafeAreaView>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
   );
 }

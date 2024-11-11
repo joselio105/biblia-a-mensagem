@@ -50,7 +50,7 @@ export function MenuMain({
         <View className="flex-1 items-center pt-40 gap-4">
           <TouchableOpacity
             className="flex-row gap-3 items-center"
-            onPress={() => handleNavigation("/")}
+            onPress={() => handleNavigation("/(tabs)old")}
           >
             <Feather name="home" size={24} color={colors.zinc[100]} />
             <Text className="text-zinc-100 font-body text-lg">Início</Text>
@@ -58,7 +58,7 @@ export function MenuMain({
 
           <TouchableOpacity
             className="flex-row gap-3 items-center"
-            onPress={() => handleNavigation("/gift")}
+            onPress={() => handleNavigation("/(tabs)gift")}
           >
             <Feather name="gift" size={24} color={colors.zinc[100]} />
             <Text className="text-zinc-100 font-body text-lg">Contribuir</Text>
@@ -66,7 +66,7 @@ export function MenuMain({
 
           <TouchableOpacity
             className="flex-row gap-3 items-center"
-            onPress={() => handleNavigation("/about")}
+            onPress={() => handleNavigation("/(tabs)about")}
           >
             <Feather name="info" size={24} color={colors.zinc[100]} />
             <Text className="text-zinc-100 font-body text-lg">Sobre</Text>
