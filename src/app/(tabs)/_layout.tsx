@@ -1,6 +1,6 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { Feather } from "@expo/vector-icons";
+import { TabBar } from "@/components/tab-bar";
 import { Tabs } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "tailwindcss/colors";
@@ -15,38 +15,18 @@ export default function TablsLayout() {
           tabBarLabelStyle: { fontSize: 12, color: colors.zinc[200] },
           headerShown: false,
         }}
-        initialRouteName="/(tabs)about"
+        tabBar={(props) => <TabBar {...props} />}
       >
         <Tabs.Screen
-          name="old"
+          name="old-testament"
           options={{
-            title: "Velho Testamento",
-            tabBarIcon: () => "",
+            headerShown: false,
           }}
         />
         <Tabs.Screen
-          name="new"
+          name="new-testament"
           options={{
-            title: "Novo Testamento",
-            tabBarIcon: () => "",
-          }}
-        />
-        <Tabs.Screen
-          name="gift"
-          options={{
-            title: "Contribua",
-            tabBarIcon: () => (
-              <Feather name="gift" size={20} color={colors.zinc[200]} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="about"
-          options={{
-            title: "Sobre",
-            tabBarIcon: () => (
-              <Feather name="info" size={20} color={colors.zinc[200]} />
-            ),
+            headerShown: false,
           }}
         />
       </Tabs>

@@ -1,5 +1,4 @@
-import { Slot, Stack } from "expo-router";
-import { SafeAreaView } from "react-native";
+import { Stack } from "expo-router";
 import {
   useFonts,
   Inter_400Regular,
@@ -8,8 +7,6 @@ import {
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
 import { Loading } from "@/components/loading";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -24,7 +21,7 @@ export default function Layout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack screenOptions={{ headerShown: false }} initialRouteName="">
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     </Stack>
   );
