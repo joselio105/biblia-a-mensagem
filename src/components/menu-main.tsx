@@ -1,7 +1,6 @@
-import { Modal, Text, TouchableOpacity, View, Animated } from "react-native";
+import { Modal, TouchableOpacity, View, Animated } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import colors from "tailwindcss/colors";
-import { Href, useRouter } from "expo-router";
 import { LogoType } from "./logotype";
 import { MenuButton } from "./menu-button";
 
@@ -18,8 +17,6 @@ export function MenuMain({
   handleClose,
   slideAnim,
 }: Props) {
-  const router = useRouter();
-
   return (
     <Modal
       transparent
@@ -38,21 +35,21 @@ export function MenuMain({
           <MenuButton
             iconName="home"
             text="Início"
-            route={"old-testament"}
+            route={"old-testament" as never}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
           />
           <MenuButton
             iconName="info"
             text="Sobre"
-            route={"about"}
+            route={"about" as never}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
           />
           <MenuButton
             iconName="gift"
             text="Contribua"
-            route={"gift"}
+            route={"gift" as never}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
           />

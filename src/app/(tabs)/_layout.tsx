@@ -3,7 +3,6 @@ import { Header } from "@/components/header";
 import { TabBar } from "@/components/tab-bar";
 import { Tabs } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import colors from "tailwindcss/colors";
 
 export default function TablsLayout() {
   return (
@@ -11,24 +10,12 @@ export default function TablsLayout() {
       <Header />
       <Tabs
         screenOptions={{
-          tabBarStyle: { backgroundColor: colors.zinc[800] },
-          tabBarLabelStyle: { fontSize: 12, color: colors.zinc[200] },
           headerShown: false,
         }}
         tabBar={(props) => <TabBar {...props} />}
       >
-        <Tabs.Screen
-          name="old-testament"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Tabs.Screen
-          name="new-testament"
-          options={{
-            headerShown: false,
-          }}
-        />
+        <Tabs.Screen name="old-testament" />
+        <Tabs.Screen name="new-testament" />
       </Tabs>
       <Footer />
     </SafeAreaView>

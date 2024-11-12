@@ -1,12 +1,13 @@
-import { Feather } from "@expo/vector-icons";
-import { Href, useNavigation } from "expo-router";
 import { TouchableOpacity, Text } from "react-native";
+import { Href, useNavigation } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import colors from "tailwindcss/colors";
+import {} from "@react-navigation/bottom-tabs";
 
 interface Props {
   text: string;
   iconName: keyof typeof Feather.glyphMap;
-  route: string;
+  route: never;
   modalVisible: boolean;
   setModalVisible: (isVisible: boolean) => void;
 }
@@ -14,7 +15,7 @@ interface Props {
 export function MenuButton({ text, iconName, route, setModalVisible }: Props) {
   const navigation = useNavigation();
 
-  function handleNavigation(route: Href) {
+  function handleNavigation(route: never) {
     navigation.navigate(route);
     setModalVisible(false);
   }

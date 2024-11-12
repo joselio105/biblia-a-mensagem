@@ -21,7 +21,7 @@ export default function Layout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }} initialRouteName="">
+    <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     </Stack>
   );
