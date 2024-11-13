@@ -28,11 +28,13 @@ export default function Book() {
         </Text>
         <View className="flex-1 px-5 gap-4">
           <FlatList
+            key={0}
+            numColumns={4}
             data={Array.from({ length: book.chaptersCount })}
             renderItem={({ index }) => (
               <TouchableOpacity
                 key={index}
-                className="w-20 h-12 flex-row justify-between p-2 bg-zinc-900 border border-zinc-400 rounded-md"
+                className="w-20 h-12 flex-row justify-between p-2 m-1.5 bg-zinc-900 border border-zinc-400 rounded-md"
                 onPress={() =>
                   handleClick(
                     `/${testament}/${book.normalizedTitle}/${index + 1}`

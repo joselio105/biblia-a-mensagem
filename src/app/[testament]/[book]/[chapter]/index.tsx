@@ -49,7 +49,7 @@ export default function Book() {
         </Text>
         <Text className="text-zinc-100 text-base font-subtitle pl-2">{`capítulo ${chapter}`}</Text>
       </View>
-      <View className="flex-1 bg-zinc-900 rounded-md px-2 mx-5">
+      <View className="flex-1 bg-zinc-900 rounded-md px-5 py-3 mx-2">
         <FlatList
           data={content}
           renderItem={({ item: verse }) => (
@@ -72,10 +72,6 @@ export default function Book() {
           )}
         />
       </View>
-      {/* <ScrollView>
-        {content.map((verse, key) => (
-        ))}
-      </ScrollView> */}
       <ButtonBack />
     </View>
   );

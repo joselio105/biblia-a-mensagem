@@ -7,6 +7,7 @@ import {
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
 import { Loading } from "@/components/loading";
+import colors from "tailwindcss/colors";
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -22,7 +23,15 @@ export default function Layout() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="(tabs)"
+        options={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: colors.zinc[800],
+          },
+        }}
+      />
     </Stack>
   );
 }

@@ -40,6 +40,13 @@ export function MenuMain({
             setModalVisible={setModalVisible}
           />
           <MenuButton
+            iconName="search"
+            text="Buscar"
+            route={"search" as never}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
+          <MenuButton
             iconName="info"
             text="Sobre"
             route={"about" as never}

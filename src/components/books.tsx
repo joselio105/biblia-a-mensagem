@@ -10,7 +10,7 @@ interface Props {
 
 export function Books({ title, books, testament }: Props) {
   return (
-    <View className="flex-1 mx-3">
+    <View className="flex-1 mx-3 mb-16">
       <Text className="text-xl text-zinc-100 font-bold text-center my-3">
         {title}
       </Text>
