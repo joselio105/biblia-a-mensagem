@@ -1,17 +1,14 @@
 import { AllBibleBooks } from "@/data/bible-books";
 import bibleJson from "@/data/bible.json";
 import { useLocalSearchParams } from "expo-router";
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import colors from "tailwindcss/colors";
 import { ButtonBack } from "@/components/button-back";
+import Clipboard from "@react-native-clipboard/clipboard";
+import Toast from "react-native-toast-message";
+import { ToastCustom } from "@/components/toast-custom";
 
 interface VerseProps {
   title: string;
@@ -27,10 +24,20 @@ interface BibleProps {
   };
 }
 
-export default function Book() {
+export default function Chapter() {
   const { testament, book: bookName, chapter } = useLocalSearchParams();
   const [content, setContent] = useState<VerseProps[]>([] as VerseProps[]);
   const book = AllBibleBooks.find((book) => book.normalizedTitle === bookName);
+
+  function handleCopy(verse: VerseProps) {
+    // Clipboard.setString(`"${verse.content}" ${bookName}:${verse.number}(MSG)`);
+    Toast.show({
+      type: "success",
+      text1: `O versículo ${bookName}:${verse.number} foi copiado!`,
+    });
+  }
+
+  function handleSave(verse: VerseProps) {}
 
   useEffect(() => {
     const bible = bibleJson as BibleProps;
@@ -65,13 +72,23 @@ export default function Book() {
                 </View>
                 {verse.content}
               </Text>
-              {/* <TouchableOpacity className="ml-auto">
-              <Feather name="copy" size={20} color={colors.zinc[400]} />
-            </TouchableOpacity> */}
+              <View className="flex-row gap-4 justify-end">
+                <TouchableOpacity onPress={() => handleCopy(verse)}>
+                  <Feather name="copy" size={24} color={colors.zinc[400]} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleSave(verse)}>
+                  <Feather name="star" size={24} color={colors.zinc[400]} />
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         />
       </View>
+      <Toast
+        config={{
+          success: ({ text1 }) => <ToastCustom text={text1 ?? "..."} />,
+        }}
+      />
       <ButtonBack />
     </View>
   );
