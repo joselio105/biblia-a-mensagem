@@ -14,7 +14,13 @@ export function ButtonBack({}: Props) {
   return (
     <TouchableOpacity
       onPress={handleBack}
-      className="h-12 flex-row gap-3 justify-center items-center bg-zinc-900 border border-zinc-400 rounded-md mx-3 mt-3"
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 12,
+      }}
+      className="h-12 bg-zinc-900 border border-zinc-400 rounded-md mx-3 mt-3"
     >
       <Feather name="arrow-left" size={20} color={colors.zinc[400]} />
       <Text className="text-zinc-400 text-base font-body">Voltar</Text>
