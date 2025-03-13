@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native";
 
 export default function Layout() {
   return (
-    <SafeAreaView className="flex-1 bg-zinc-800 pt-10">
+    <SafeAreaView className="flex-1 bg-zinc-800">
       <Header />
       <Slot />
       <Footer />

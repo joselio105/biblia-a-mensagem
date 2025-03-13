@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import colors from "tailwindcss/colors";
 import { ButtonBack } from "@/components/button-back";
-import Clipboard from "@react-native-clipboard/clipboard";
-import Toast from "react-native-toast-message";
+// import Clipboard from "@react-native-clipboard/clipboard";
+// import Toast from "react-native-toast-message";
 import { ToastCustom } from "@/components/toast-custom";
 
 interface VerseProps {
@@ -31,10 +31,10 @@ export default function Chapter() {
 
   function handleCopy(verse: VerseProps) {
     // Clipboard.setString(`"${verse.content}" ${bookName}:${verse.number}(MSG)`);
-    Toast.show({
+    /* Toast.show({
       type: "success",
       text1: `O versículo ${bookName}:${verse.number} foi copiado!`,
-    });
+    }); */
   }
 
   function handleSave(verse: VerseProps) {}
@@ -84,12 +84,13 @@ export default function Chapter() {
           )}
         />
       </View>
-      <Toast
-        config={{
-          success: ({ text1 }) => <ToastCustom text={text1 ?? "..."} />,
-        }}
-      />
+      
       <ButtonBack />
     </View>
   );
 }
+{/* <Toast
+        config={{
+          success: ({ text1 }) => <ToastCustom text={text1 ?? "..."} />,
+        }}
+      /> */}
