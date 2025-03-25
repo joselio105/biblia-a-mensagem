@@ -1,5 +1,5 @@
 import { TouchableOpacity, Text } from "react-native";
-import { useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import colors from "tailwindcss/colors";
 
@@ -12,10 +12,10 @@ interface Props {
 }
 
 export function MenuButton({ text, iconName, route, setModalVisible }: Props) {
-  const navigation = useNavigation();
+  const navigation = useRouter();
 
   function handleNavigation(route: never) {
-    navigation.navigate(route);
+  navigation.navigate(route);
     setModalVisible(false);
   }
   return (

@@ -35,7 +35,14 @@ export function MenuMain({
           <MenuButton
             iconName="home"
             text="Início"
-            route={"old-testament" as never}
+            route={"/old-testament" as never}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
+          <MenuButton
+            iconName="star"
+            text="Favoritos"
+            route={"favorites" as never}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
           />
