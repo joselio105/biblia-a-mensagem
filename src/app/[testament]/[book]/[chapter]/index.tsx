@@ -1,33 +1,20 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import * as Clipboard from "expo-clipboard"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import clsx from "clsx";
 import { AllBibleBooks } from "@/data/bible-books";
 import bibleJson from "@/data/bible.json";
 import { ButtonBack } from "@/components/button-back";
 import { Button } from "@/components/button";
-
-interface VerseProps {
-  title: string;
-  number: string;
-  content: string;
-}
-
-interface BibleProps {
-  [testament: string]: {
-    [book: string]: {
-      [chapter: string]: VerseProps[];
-    };
-  };
-}
+import { storage } from "@/services/async-storage";
+import { IBible, IVerse, IVerseReference } from "@/types/bible";
 
 export default function Chapter() {
   const { testament, book: bookName, chapter } = useLocalSearchParams();
-  const [content, setContent] = useState<VerseProps[]>([] as VerseProps[]);
+  const [content, setContent] = useState<IVerse[]>([] as IVerse[]);
   const book = AllBibleBooks.find((book) => book.normalizedTitle === bookName);
-  const [selecteds, setSelecteds] = useState<VerseProps[]>([])
+  const [selecteds, setSelecteds] = useState<IVerse[]>([])
   const [actionMessage, setActionMessage] = useState<String>('')
 
   async function handleCopy() {
@@ -36,29 +23,17 @@ export default function Chapter() {
       setMessage('Texto copiado com sucesso')
       handleCleanSelection() 
     } catch (error) {
-      console.error(error);
-      
+      console.error(error);      
     }
   }
   
   async function handleSave() {
-    try{
-      const savedVersesJson = await AsyncStorage.getItem('saved_verses')??'[]'
-      const savedVerses = JSON.parse(savedVersesJson)
-
-      /* 
-      Acrescentar a lista de versículos salvos somente aqueles que ainda não se encontram salvos
-      const versesToSave = getSelectedData().filter((data)=>data.book) */
-      await AsyncStorage.setItem('saved_verses', getSelectedText())
-      setMessage('Texto marcado como favorito')
-      handleCleanSelection()
-    }catch(e){
-      console.error(e);
-      
-    }
+    await storage.save(getVersesReference())
+    setMessage('Texto marcado como favorito')
+    handleCleanSelection()
   }
 
-  function handleSelection(verse:VerseProps){
+  function handleSelection(verse:IVerse){
     if(selecteds.find(({number})=>number===verse.number)){
       setSelecteds(selecteds.filter(({number})=>number!==verse.number))
     }else{
@@ -83,6 +58,18 @@ export default function Chapter() {
     return selectedTexts.join("\n\n")
   }
 
+  function getVersesReference():IVerseReference[]{
+    return selecteds.map(({number})=>{
+      const reference: IVerseReference = {
+        book: bookName as string,
+        chapter: chapter as string,
+        verse: number
+      }
+      
+      return reference
+    })
+  }
+
   function getSelectedData(){
     return selecteds.map(({number})=>(
       {
@@ -95,7 +82,7 @@ export default function Chapter() {
   }
 
   useEffect(() => {
-    const bible = bibleJson as BibleProps;
+    const bible = bibleJson as IBible;
     setContent(bible[String(testament)][String(bookName)][String(chapter)]);
   }, []);
 
