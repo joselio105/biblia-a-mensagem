@@ -9,29 +9,27 @@ import { storage } from "@/services/async-storage";
 
 export default function Favorites() {
   const router = useRouter();
-  const [itemsSaved, setItemsSaved]=useState<IVerse[]>()
+  const [itemsSaved, setItemsSaved]=useState<IVerse[]>([])
 
   async function fetchItems(){
+    // TODO: Problemas em atualizar a lista de favoritos
+    
     const dataStored = await storage.read()
-    /**
-     * Buscar conteúdo 
-     * Colocar conteúdo como Flatlist
-     */
-    const data = AllBibleBooks.filter(({normalizedTitle})=>normalizedTitle===dataStored[0].book)
     
     const bible = bibleJson as IBible;
-    const books = dataStored.map((item:IVerseReference)=>{
-      console.log(item.book, afterSelect(item.book));
-      
-    })
     
-    /* setItemsSaved(dataStored.map((item:IVerseReference)=>{
-      const testament = BibleBooks.newTestament.find(book=>book.normalizedTitle===item.book) ? 'new-testament': 'old-testament'
-      const verse = bible[testament][item.book][item.verse]
-      console.log(verse);
+    const books = dataStored.map(({testament, book, chapter, verse}:IVerseReference)=>{
+      const chapterContent = bible[testament][book][chapter]
+      const item = chapterContent.find((verses)=>(verse===verses.number)) ?? {} as IVerse
+      item.reference = getVerseReference({book, chapter, verse, testament})
+      setItemsSaved([item, ...itemsSaved])      
+    })
+  }
 
-      
-    })) */
+  function getVerseReference({book: bookName, chapter, verse: number}:IVerseReference){
+    const book = AllBibleBooks.find((book) => book.normalizedTitle === bookName);
+    
+    return `${book?.title} ${chapter}:${number} (MSG)`
   }
 
   useEffect(()=>{
@@ -66,6 +64,7 @@ export default function Favorites() {
             renderItem={({ item }) => (
               <View className="px-2 mb-3">                        
                 <Text className="text-zinc-200 text-base text-justify font-body">
+                  {item.reference}
                   <View className="pr-3">
                     <Text className="text-zinc-400 text-sm">
                       {item.content}

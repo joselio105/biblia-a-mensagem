@@ -16,10 +16,14 @@ export interface IVerse {
     title: string;
     number: string;
     content: string;
+    reference?: string;
 }
 
 export interface IVerseReference {
+    testament: TTestament
     book: string
     chapter: string
     verse: string
 }
+
+export type TTestament = 'old-testament'|'new-testament'

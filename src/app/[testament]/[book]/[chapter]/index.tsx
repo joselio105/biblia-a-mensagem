@@ -8,7 +8,7 @@ import bibleJson from "@/data/bible.json";
 import { ButtonBack } from "@/components/button-back";
 import { Button } from "@/components/button";
 import { storage } from "@/services/async-storage";
-import { IBible, IVerse, IVerseReference } from "@/types/bible";
+import { IBible, IVerse, IVerseReference, TTestament } from "@/types/bible";
 
 export default function Chapter() {
   const { testament, book: bookName, chapter } = useLocalSearchParams();
@@ -61,6 +61,7 @@ export default function Chapter() {
   function getVersesReference():IVerseReference[]{
     return selecteds.map(({number})=>{
       const reference: IVerseReference = {
+        testament: testament as TTestament,
         book: bookName as string,
         chapter: chapter as string,
         verse: number
