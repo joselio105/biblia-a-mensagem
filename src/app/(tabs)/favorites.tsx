@@ -1,28 +1,50 @@
 import { FlatList, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Heading } from "@/components/heading";
-import { AllBibleBooks, BibleBooks } from "@/data/bible-books";
+import { AllBibleBooks } from "@/data/bible-books";
 import bibleJson from "@/data/bible.json";
-import { IBible, IBibleBook, IVerse, IVerseReference } from "@/types/bible";
+import { IBible, IVerse, IVerseReference } from "@/types/bible";
 import { useEffect, useState } from "react";
-import { storage } from "@/services/async-storage";
+import { Verse } from "@/components/verse";
+import { useStorage } from "@/hooks/use-storage";
+import { ButtonsWrapper } from "@/components/buttons-wrapper";
+import { ButtonBack } from "@/components/button-back";
+import { Button } from "@/components/button";
 
 export default function Favorites() {
   const router = useRouter();
+  const { storedItems,clearStorage } = useStorage()
   const [itemsSaved, setItemsSaved]=useState<IVerse[]>([])
+  const [selecteds, setSelecteds] = useState<IVerse[]>([])
 
-  async function fetchItems(){
-    // TODO: Problemas em atualizar a lista de favoritos
-    
-    const dataStored = await storage.read()
-    
+  function handleSelection(verse:IVerse){
+    if(selecteds.find(({number})=>number===verse.number)){
+      setSelecteds(selecteds.filter(({number})=>number!==verse.number))
+    }else{
+      setSelecteds([verse, ...selecteds])              
+    }
+  }
+
+  function handleCleanSelection(){
+    clearStorage()
+    setItemsSaved([])
+    setSelecteds([])
+  }
+
+  async function fetchItems(){    
     const bible = bibleJson as IBible;
     
-    const books = dataStored.map(({testament, book, chapter, verse}:IVerseReference)=>{
-      const chapterContent = bible[testament][book][chapter]
-      const item = chapterContent.find((verses)=>(verse===verses.number)) ?? {} as IVerse
-      item.reference = getVerseReference({book, chapter, verse, testament})
-      setItemsSaved([item, ...itemsSaved])      
+    storedItems.forEach((verse:IVerseReference)=>{
+      
+      const chapterContent = bible[verse.testament][verse.book][verse.chapter]
+      const item = chapterContent.find((verses)=>(verse.verse===verses.number))
+      if(item && !hasVerse(verse)){
+        hasVerse(verse)
+        item.reference = getVerseReference(verse)
+        item.createdAt = verse.createdAt
+        
+        setItemsSaved([item, ...itemsSaved])
+      }
     })
   }
 
@@ -32,52 +54,33 @@ export default function Favorites() {
     return `${book?.title} ${chapter}:${number} (MSG)`
   }
 
+  function hasVerse(verseReference: IVerseReference):boolean {    
+    return Boolean(
+      itemsSaved.find(({reference})=>(reference===getVerseReference(verseReference)))
+    )
+  }
+
   useEffect(()=>{
     fetchItems()
-  }, [])
-
-  function afterSelect(bookName: string) {
-    const bookOldTestament = findBook(BibleBooks.oldTestament, bookName);
-    
-    if (bookOldTestament) {
-      return bookOldTestament
-    }
-    
-    const bookNewTestament = findBook(BibleBooks.newTestament, bookName);
-    console.log(bookNewTestament);
-    if (bookNewTestament) {
-      return bookNewTestament
-    }
-  }
-
-  function findBook(testament: IBibleBook[], bookName: string) {
-    return testament.find((book) => book.normalizedTitle === bookName);
-  }
+  }, [storedItems])
 
   return (
     <View className="flex-1 bg-zinc-800">
-      <Heading>Favoritos</Heading>
-      {itemsSaved ? 
-        (
-          <FlatList
-            data={itemsSaved}
-            renderItem={({ item }) => (
-              <View className="px-2 mb-3">                        
-                <Text className="text-zinc-200 text-base text-justify font-body">
-                  {item.reference}
-                  <View className="pr-3">
-                    <Text className="text-zinc-400 text-sm">
-                      {item.content}
-                    </Text>
-                  </View>
-                </Text>
-              </View>
-            )}
-          />
-        ) : (
-        <Text className="text-2xl text-red-500">'Nada salvo'</Text>
-
-      )}
+      <View className="flex-row items-center justify-center">
+        <Heading className="flex-1">Favoritos</Heading>
+        <Text className="text-zinc-400 ml-auto pr-5">{itemsSaved.length} itens salvos</Text>
+      </View>
+      <ButtonsWrapper hasSelection={selecteds.length>0}>
+        <Button.root onPress={handleCleanSelection}>
+          <Button.icon name="trash" />
+          <Button.text>Limpar</Button.text>
+        </Button.root>
+      </ButtonsWrapper>
+      <FlatList
+        data={itemsSaved}
+        renderItem={({ item }) => (<Verse verse={item} selecteds={selecteds} handleSelection={handleSelection} />
+        )}
+      />
     </View>
   );
 }

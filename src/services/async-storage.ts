@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const key = 'saved_verses'
 
+
 async function save(dataToStore:IVerseReference[]){
     try {
         const dataStored = await read() as IVerseReference[]
@@ -31,6 +32,10 @@ async function read() {
     }    
 }
 
+async function clear() {
+    await AsyncStorage.clear()
+}
+
 function createKey({book, chapter, verse}: IVerseReference){
     return `${book}${chapter}${verse}`
 }
@@ -41,5 +46,6 @@ function getKeysList(items: IVerseReference[]){
 
 export const storage ={
     read,
-    save
+    save,
+    clear
 }

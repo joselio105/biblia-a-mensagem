@@ -8,6 +8,7 @@ import {
 } from "@expo-google-fonts/inter";
 import { Loading } from "@/components/loading";
 import colors from "tailwindcss/colors";
+import { StorageContext, StorageProvider } from "@/contexts/storage-context";
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -22,16 +23,18 @@ export default function Layout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="(tabs)"
-        options={{
-          headerShown: false,
-          contentStyle: {
-            backgroundColor: colors.zinc[800],
-          },
-        }}
-      />
-    </Stack>
+    <StorageProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            headerShown: false,
+            contentStyle: {
+              backgroundColor: colors.zinc[800],
+            },
+          }}
+        />
+      </Stack>
+    </StorageProvider>
   );
 }

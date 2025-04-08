@@ -17,6 +17,7 @@ export interface IVerse {
     number: string;
     content: string;
     reference?: string;
+    createdAt?: number
 }
 
 export interface IVerseReference {
@@ -24,6 +25,7 @@ export interface IVerseReference {
     book: string
     chapter: string
     verse: string
+    createdAt: number
 }
 
 export type TTestament = 'old-testament'|'new-testament'

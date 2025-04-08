@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
-import { Text } from "react-native";
+import { Text, TextProps } from "react-native";
 
-interface Props {
+interface Props extends TextProps{
   children: string;
   type?: "h2" | "h3";
 }

@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import * as Clipboard from "expo-clipboard"
 import clsx from "clsx";
-import { AllBibleBooks } from "@/data/bible-books";
 import bibleJson from "@/data/bible.json";
-import { ButtonBack } from "@/components/button-back";
+import { Verse } from "@/components/verse";
 import { Button } from "@/components/button";
-import { storage } from "@/services/async-storage";
+import { ButtonBack } from "@/components/button-back";
+import { useStorage } from "@/hooks/use-storage";
+import { AllBibleBooks } from "@/data/bible-books";
 import { IBible, IVerse, IVerseReference, TTestament } from "@/types/bible";
+import { ButtonsWrapper } from "@/components/buttons-wrapper";
 
 export default function Chapter() {
   const { testament, book: bookName, chapter } = useLocalSearchParams();
@@ -16,6 +18,7 @@ export default function Chapter() {
   const book = AllBibleBooks.find((book) => book.normalizedTitle === bookName);
   const [selecteds, setSelecteds] = useState<IVerse[]>([])
   const [actionMessage, setActionMessage] = useState<String>('')
+  const { addStoredItem } = useStorage()
 
   async function handleCopy() {
     try {
@@ -28,8 +31,10 @@ export default function Chapter() {
   }
   
   async function handleSave() {
-    await storage.save(getVersesReference())
-    setMessage('Texto marcado como favorito')
+    getVersesReference().forEach(item=>{
+      addStoredItem(item)
+    })
+    setMessage('Texto(s) marcado(s) como favorito(s')
     handleCleanSelection()
   }
 
@@ -59,27 +64,19 @@ export default function Chapter() {
   }
 
   function getVersesReference():IVerseReference[]{
+    console.log(selecteds);
+    
     return selecteds.map(({number})=>{
       const reference: IVerseReference = {
         testament: testament as TTestament,
         book: bookName as string,
         chapter: chapter as string,
-        verse: number
+        verse: number,
+        createdAt: new Date().valueOf()
       }
       
       return reference
     })
-  }
-
-  function getSelectedData(){
-    return selecteds.map(({number})=>(
-      {
-        book: book?.title,
-        chapter,
-        verse: number,
-        createdAt: new Date().toISOString
-      }
-    ))
   }
 
   useEffect(() => {
@@ -100,15 +97,7 @@ export default function Chapter() {
         <Text className="text-zinc-100 text-base font-subtitle pl-2">{`capítulo ${chapter}`}</Text>
       </View>
       <View className="flex-1 bg-zinc-900 rounded-md px-5 py-3 mx-2">
-        <View className={clsx(
-          "flex-row items-center justify-end mb-4",
-          {
-            "hidden":selecteds.length===0, 
-            "flex":selecteds.length>0
-            }
-          )} 
-          style={{gap: 8}}
-          >
+        <ButtonsWrapper hasSelection={selecteds.length>0}>
           <Button.root onPress={async ()=>await handleCopy()}>
             <Button.icon name="copy"/>
             <Button.text>Copiar</Button.text>
@@ -121,7 +110,7 @@ export default function Chapter() {
             <Button.icon name="trash"/>
             <Button.text>Limpar</Button.text>
           </Button.root>
-        </View>
+        </ButtonsWrapper>
 
         <View 
           className={clsx(
@@ -134,41 +123,7 @@ export default function Chapter() {
         <FlatList
           data={content}
           renderItem={({ item: verse }) => (
-            <TouchableOpacity 
-              className={clsx("px-2 mb-3", {
-                'bg-zinc-700 rounded-lg p-2': Boolean(selecteds.find(({number})=>number===verse.number))
-              })} 
-              onPress={()=>handleSelection(verse)}
-              >
-              {verse.title.length > 0 && (
-                <Text className="text-zinc-200 text-base font-subtitle text-center my-3">
-                  {verse.title}
-                </Text>
-              )}
-              <Text 
-                className={clsx(
-                  "text-zinc-200 text-base text-justify font-body",
-                  {
-                    'text-zinc-400': Boolean(selecteds.find(({number})=>number===verse.number))
-                  }
-                )}
-                >
-                <View className="pr-3">
-                  <Text className="text-zinc-400 text-sm">
-                    {verse.number}
-                  </Text>
-                </View>
-                {verse.content}
-              </Text>
-              {/* <View className="flex-row gap-4 justify-end">
-                <TouchableOpacity onPress={() => handleCopy(verse)}>
-                  <Feather name="copy" size={24} color={colors.zinc[400]} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleSave(verse)}>
-                  <Feather name="star" size={24} color={colors.zinc[400]} />
-                </TouchableOpacity>
-              </View> */}
-            </TouchableOpacity>
+            <Verse verse={verse} selecteds={selecteds} handleSelection={handleSelection} />
           )}
         />
       </View>
@@ -177,8 +132,3 @@ export default function Chapter() {
     </View>
   );
 }
-{/* <Toast
-        config={{
-          success: ({ text1 }) => <ToastCustom text={text1 ?? "..."} />,
-        }}
-      /> */}
