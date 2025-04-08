@@ -18,7 +18,7 @@ export default function Chapter() {
   const book = AllBibleBooks.find((book) => book.normalizedTitle === bookName);
   const [selecteds, setSelecteds] = useState<IVerse[]>([])
   const [actionMessage, setActionMessage] = useState<String>('')
-  const { addStoredItem } = useStorage()
+  const { addStoredItems } = useStorage()
 
   async function handleCopy() {
     try {
@@ -31,9 +31,7 @@ export default function Chapter() {
   }
   
   async function handleSave() {
-    getVersesReference().forEach(item=>{
-      addStoredItem(item)
-    })
+    addStoredItems(getVersesReference())
     setMessage('Texto(s) marcado(s) como favorito(s')
     handleCleanSelection()
   }
@@ -63,9 +61,7 @@ export default function Chapter() {
     return selectedTexts.join("\n\n")
   }
 
-  function getVersesReference():IVerseReference[]{
-    console.log(selecteds);
-    
+  function getVersesReference():IVerseReference[]{    
     return selecteds.map(({number})=>{
       const reference: IVerseReference = {
         testament: testament as TTestament,

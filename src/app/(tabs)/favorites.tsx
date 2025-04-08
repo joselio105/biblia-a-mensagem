@@ -34,12 +34,11 @@ export default function Favorites() {
   async function fetchItems(){    
     const bible = bibleJson as IBible;
     
-    storedItems.forEach((verse:IVerseReference)=>{
-      
+    storedItems.forEach((verse:IVerseReference)=>{      
       const chapterContent = bible[verse.testament][verse.book][verse.chapter]
       const item = chapterContent.find((verses)=>(verse.verse===verses.number))
+      
       if(item && !hasVerse(verse)){
-        hasVerse(verse)
         item.reference = getVerseReference(verse)
         item.createdAt = verse.createdAt
         
@@ -68,7 +67,7 @@ export default function Favorites() {
     <View className="flex-1 bg-zinc-800">
       <View className="flex-row items-center justify-center">
         <Heading className="flex-1">Favoritos</Heading>
-        <Text className="text-zinc-400 ml-auto pr-5">{itemsSaved.length} itens salvos</Text>
+        <Text className="text-zinc-400 ml-auto pr-5">{storedItems.length} itens salvos</Text>
       </View>
       <ButtonsWrapper hasSelection={selecteds.length>0}>
         <Button.root onPress={handleCleanSelection}>
@@ -78,7 +77,7 @@ export default function Favorites() {
       </ButtonsWrapper>
       <FlatList
         data={itemsSaved}
-        renderItem={({ item }) => (<Verse verse={item} selecteds={selecteds} handleSelection={handleSelection} />
+        renderItem={({ item }) => (<Verse showReference verse={item} selecteds={selecteds} handleSelection={handleSelection} />
         )}
       />
     </View>

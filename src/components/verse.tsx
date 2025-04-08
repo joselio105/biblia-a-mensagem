@@ -6,9 +6,10 @@ interface Props{
     verse: IVerse
     handleSelection: (verse:IVerse)=>void
     selecteds: IVerse[]
+    showReference?: boolean
 }
 
-export function Verse({verse, selecteds, handleSelection}:Props){
+export function Verse({verse, selecteds, handleSelection, showReference = false}:Props){
     return (
         <TouchableOpacity 
           className={clsx("px-2 mb-3", {
@@ -16,7 +17,7 @@ export function Verse({verse, selecteds, handleSelection}:Props){
           })} 
           onPress={()=>handleSelection(verse)}
           >
-            {verse.reference && (
+            {verse.reference && showReference && (
                 <Text className="text-zinc-200 text-base font-bold underline">{verse.reference}</Text>
             )}
           {verse.title.length > 0 && (

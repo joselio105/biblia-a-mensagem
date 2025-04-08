@@ -5,7 +5,7 @@ import { Children, createContext, Dispatch, ReactNode, SetStateAction, useEffect
 export interface IStorageContext {
     storedItems: IVerseReference[],
     setStoredItems: Dispatch<SetStateAction<IVerseReference[]>>
-    addStoredItem: (item: IVerseReference)=>void
+    addStoredItems: (items: IVerseReference[])=>void
     clearStorage: ()=>void
 }
 
@@ -23,10 +23,10 @@ export function StorageProvider({ children }:IStorageProvider){
         setStoredItems(items)
     }
 
-    async function addStoredItem(item: IVerseReference) {
-        const items = [item, ...storedItems]
-        await storage.save(items)
-        setStoredItems(items)
+    async function addStoredItems(items: IVerseReference[]) {
+        const itemsToStore = [...items, ...storedItems]
+        await storage.save(itemsToStore)
+        setStoredItems(itemsToStore)
     }
 
     async function clearStorage() {
@@ -39,7 +39,7 @@ export function StorageProvider({ children }:IStorageProvider){
     }, [])
 
     return (
-        <StorageContext.Provider value={{storedItems, setStoredItems, addStoredItem, clearStorage}}>
+        <StorageContext.Provider value={{storedItems, setStoredItems, addStoredItems, clearStorage}}>
             {children}
         </StorageContext.Provider>
     )

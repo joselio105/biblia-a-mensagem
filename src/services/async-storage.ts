@@ -8,6 +8,11 @@ async function save(dataToStore:IVerseReference[]){
     try {
         const dataStored = await read() as IVerseReference[]
         const itemsFound = dataStored.filter(stored=>getKeysList(dataToStore).has(createKey(stored)))
+        console.log('------------', {
+            dataStored,
+            dataToStore,
+            itemsFound
+        });
         
         if(itemsFound.length===0){
             dataStored.push(...dataToStore)
